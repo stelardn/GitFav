@@ -4,11 +4,171 @@
   box-sizing: border-box;
 }
 
+/* font-family: 'Roboto Mono', monospace; */
+
 :root {
   font-size: 62.5%;
+  --bg-color: black;
+  --primary-color: #E1E1E6;
 }
 
 body {
+  background-color: var(--bg-color);
   font-size: 1.6rem;
+}
+
+body * {
+  color: var(--primary-color);
+}
+
+#app {
+  font-family: 'Roboto', sans-serif;
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 5rem;
+}
+
+.user img {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 7.5rem auto 6rem;
+  width: 100%;
+}
+
+header img {
+  width: 22rem;
+  height: 5.4rem;
+}
+
+.input-wrapper {
+  display: flex;
+  text-align: center;
+  gap: 2rem;
+  height: 4rem;
+  gap: 0;
+}
+
+.input-wrapper input {
+  font-size: 1.4rem;
+  min-width: 36rem;
+  font-weight: 400;
+  border-radius: .5rem;
+}
+
+
+.sr-only {
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.input-wrapper button {
+  --btn-bg-color: #065E7C;
+  --btn-f-color: #fff;
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+
+  padding: 1.2rem 3.2rem;
+  
+  background: var(--btn-bg-color);
+  color: var(--btn-f-color);
+
+  border: none;
+  border-radius: .5rem;
+
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.input-wrapper button svg path {
+  fill: var(--btn-f-color);
+}
+
+.input-wrapper button:hover {
+  --btn-bg-color: #fff;
+  --btn-f-color: #065E7C;
+}
+
+table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+table * {
+  text-align: left;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+thead *, td {
+  padding: 1.6rem 4rem;
+}
+
+thead {
+  background: #092D38;
+}
+
+th:nth-child(1) {
+  border-top-left-radius: .8rem;
+}
+
+th:nth-child(4) {
+  border-top-right-radius: .8rem;
+}
+
+tr:nth-child(odd) {
+  background: #06161B80;
+}
+
+tr:nth-child(even) {
+  background: #06181C;
+}
+
+td.user {
+  width: 21.8rem;
+} 
+
+td.user a {
+  display: flex;
+  gap: 1.6rem;
+}
+
+td.user a {
+  text-decoration: none;
+}
+
+td.user span {
+  font-weight: 400;
+} 
+
+.action button {
+  background: none;
+  border: none;
+
+  color: #F75A68;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.action button:hover {
+  filter: brightness(1.25);
+}
+
+tr:last-child td:first-child {
+  border-bottom-left-radius: .8rem;
+}
+
+tr:last-child td:last-child {
+  border-bottom-right-radius: .8rem;
 }
 
