@@ -1,9 +1,13 @@
+import { GitHubUser } from "./GitHubUser.js";
+
 //logica
 export class Favorites {
   constructor(root) {
     this.root = document.querySelector(root);
 
     this.load();
+
+    this.add("stelardn");
   }
 
   load() {
@@ -21,6 +25,19 @@ export class Favorites {
         followers: "32",
       },
     ]
+
+  }
+
+  async add(user) {
+    let newEntries = [];
+    const newUser = await GitHubUser.search(user);
+    
+    newEntries = [newUser, ...this.entries];
+
+    this.entries = newEntries;
+
+    console.log(this.entries);
+
   }
 
   delete(user) {
@@ -34,6 +51,7 @@ export class Favorites {
     this.entries = newEntries;
     console.log(this.entries);
   }
+
 }
 
 //html
