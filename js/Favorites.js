@@ -8,19 +8,31 @@ export class Favorites {
 
   load() {
     this.entries = [
-      // {
-      //   login: "stelardn",
-      //   name: "Stéfany",
-      //   public_reps: "22",
-      //   followers: "32",
-      // },
-      // {
-      //   login: "stelardn",
-      //   name: "Stéfany",
-      //   public_reps: "22",
-      //   followers: "32",
-      // },
+      {
+        login: "stelardn",
+        name: "Stéfany",
+        public_reps: "22",
+        followers: "32",
+      },
+      {
+        login: "diego3g",
+        name: "Diego",
+        public_reps: "22",
+        followers: "32",
+      },
     ]
+  }
+
+  delete(user) {
+    let newEntries = [];
+    this.entries.forEach(entry => {
+      if (entry.login !== user) {
+        newEntries = [...newEntries, entry]
+      }
+    })
+
+    this.entries = newEntries;
+    console.log(this.entries);
   }
 }
 
@@ -33,6 +45,8 @@ export class FavoritesView extends Favorites {
     this.tbody = this.root.querySelector("table tbody");
 
     this.update();
+
+    // this.delete("stelardn");
 
   }
 
@@ -60,12 +74,18 @@ export class FavoritesView extends Favorites {
 
         row.querySelector('.user a').href = `https://github.com/${entry.login}`
         row.querySelector('.user img').alt = `Imagem de ${entry.name}` 
+        row.querySelector('.user img').src = `https://github.com/${entry.login}.png` 
         row.querySelector('.user a p').innerHTML = `${entry.name}<br/>
         <span>/${entry.login}</span>`
         row.querySelector('.repos').textContent = entry.public_reps;
         row.querySelector('.followers').textContent = entry.followers;
 
-        this.tbody.append(row)
+        this.tbody.append(row);
+
+        row.querySelector('.action button').onclick = () => {
+          this.delete(entry.login);
+          this.update();
+        }
       })
     } else {
       const emptySpace = this.createEmptyTable();
