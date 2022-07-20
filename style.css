@@ -183,7 +183,7 @@ tr:last-child td:last-child {
   border-bottom-right-radius: .8rem;
 }
 
-tr.empty-state {
+tr td.empty-state {
   justify-content: center;
   height: 64.2rem;
 }

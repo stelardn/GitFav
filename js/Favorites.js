@@ -8,19 +8,18 @@ export class Favorites {
 
   load() {
     this.entries = [
-      {
-        login: "stelardn",
-        name: "Stéfany",
-        public_reps: "22",
-        followers: "32",
-      },
-      {
-        login: "stelardn",
-        name: "Stéfany",
-        public_reps: "22",
-        followers: "32",
-      },
-
+      // {
+      //   login: "stelardn",
+      //   name: "Stéfany",
+      //   public_reps: "22",
+      //   followers: "32",
+      // },
+      // {
+      //   login: "stelardn",
+      //   name: "Stéfany",
+      //   public_reps: "22",
+      //   followers: "32",
+      // },
     ]
   }
 }
@@ -41,7 +40,6 @@ export class FavoritesView extends Favorites {
     this.removeAllRows();
 
     this.createRows();
-
   }
 
   removeAllRows() {
@@ -55,19 +53,25 @@ export class FavoritesView extends Favorites {
   }
 
   createRows() {
-    this.entries.forEach(entry => 
-    {
-      const row = this.createARow();
+    if (this.entries[0]) {
+      this.entries.forEach(entry => 
+      {
+        const row = this.createARow();
 
-      row.querySelector('.user a').href = `https://github.com/${entry.login}`
-      row.querySelector('.user img').alt = `Imagem de ${entry.name}` 
-      row.querySelector('.user a p').innerHTML = `${entry.name}<br/>
-      <span>/${entry.login}</span>`
-      row.querySelector('.repos').textContent = entry.public_reps;
-      row.querySelector('.followers').textContent = entry.followers;
+        row.querySelector('.user a').href = `https://github.com/${entry.login}`
+        row.querySelector('.user img').alt = `Imagem de ${entry.name}` 
+        row.querySelector('.user a p').innerHTML = `${entry.name}<br/>
+        <span>/${entry.login}</span>`
+        row.querySelector('.repos').textContent = entry.public_reps;
+        row.querySelector('.followers').textContent = entry.followers;
 
-      this.tbody.append(row)
-    })
+        this.tbody.append(row)
+      })
+    } else {
+      const emptySpace = this.createEmptyTable();
+      console.log(emptySpace);
+      this.tbody.append(emptySpace);
+    }
 
   }
 
@@ -94,7 +98,18 @@ export class FavoritesView extends Favorites {
     return tr;
   }
 
+  createEmptyTable() {
+    const tr = document.createElement('tr');
 
-  
+    tr.innerHTML = `
+    <td colspan="4" class="empty-state">
+     <div id="empty-state">
+        <img src="img/star-empty.svg" alt="Desenho de uma estrela com uma expressão humana de surpresa.">
+        <p>Nenhum favorito ainda</p>
+      </div>
+    </td>`
+
+    return tr;
+  }
 
 }
