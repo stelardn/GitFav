@@ -126,7 +126,14 @@ thead *, td {
   padding: 1.6rem 4rem;
 }
 
+.table-scroll {
+  overflow: auto;
+  max-height: 64.2rem;
+}
+
 thead {
+  position: sticky;
+  top: 0;
   background: #092D38;
 }
 
@@ -200,5 +207,6 @@ tr td.empty-state {
   font-size: 4rem;
   color: #4E5455;
 }
+
 
 
