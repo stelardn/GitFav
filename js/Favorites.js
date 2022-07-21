@@ -9,21 +9,11 @@ export class Favorites {
   }
 
   load() {
-    this.entries = [
-      {
-        login: "stelardn",
-        name: "Stéfany",
-        public_repos: "22",
-        followers: "32",
-      },
-      {
-        login: "diego3g",
-        name: "Diego",
-        public_repos: "22",
-        followers: "32",
-      },
-    ]
+    this.entries = JSON.parse(localStorage.getItem('@github-favs:')) || []
+  }
 
+  save() {
+    localStorage.setItem('@github-favs:', JSON.stringify(this.entries))
   }
 
   async add(user) {
@@ -46,6 +36,8 @@ export class Favorites {
     }
 
     this.update();
+
+    this.save();
   }
 
   delete(user) {
@@ -61,7 +53,8 @@ export class Favorites {
       this.entries = newEntries;
     }
 
-    console.log(this.entries);
+    this.update();
+    this.save();
   }
 
 }
@@ -119,7 +112,6 @@ export class FavoritesView extends Favorites {
       })
     } else {
       const emptySpace = this.createEmptyTable();
-      console.log(emptySpace);
       this.tbody.append(emptySpace);
     }
 
