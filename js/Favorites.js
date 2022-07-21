@@ -6,8 +6,6 @@ export class Favorites {
     this.root = document.querySelector(root);
 
     this.load();
-
-    this.add("stelardn");
   }
 
   load() {
@@ -15,13 +13,13 @@ export class Favorites {
       {
         login: "stelardn",
         name: "Stéfany",
-        public_reps: "22",
+        public_repos: "22",
         followers: "32",
       },
       {
         login: "diego3g",
         name: "Diego",
-        public_reps: "22",
+        public_repos: "22",
         followers: "32",
       },
     ]
@@ -29,15 +27,25 @@ export class Favorites {
   }
 
   async add(user) {
-    let newEntries = [];
-    const newUser = await GitHubUser.search(user);
+    try {
+      const userFaved = this.entries.find(entry => user.toUpperCase() === entry.login.toUpperCase());
+      if (userFaved) {
+        throw new Error('Este usuário já está entre os favoritos!')
+      }
+
+      const newUser = await GitHubUser.search(user);
+
+      if (newUser.login === undefined) {
+        throw new Error('Usuário não encontrado.')
+      }
     
-    newEntries = [newUser, ...this.entries];
+      this.entries = [newUser, ...this.entries];
+  
+    } catch(error) {
+      alert(error.message);
+    }
 
-    this.entries = newEntries;
-
-    console.log(this.entries);
-
+    this.update();
   }
 
   delete(user) {
@@ -48,7 +56,11 @@ export class Favorites {
       }
     })
 
-    this.entries = newEntries;
+    const isOk = confirm("Tem certeza de que quer desfavoritar esse usuário?")
+    if (isOk){
+      this.entries = newEntries;
+    }
+
     console.log(this.entries);
   }
 
@@ -63,14 +75,14 @@ export class FavoritesView extends Favorites {
     this.tbody = this.root.querySelector("table tbody");
 
     this.update();
-
-    // this.delete("stelardn");
-
+    
+    this.addAUser();
+    
   }
-
+  
   update() {
     this.removeAllRows();
-
+    
     this.createRows();
   }
 
@@ -95,7 +107,7 @@ export class FavoritesView extends Favorites {
         row.querySelector('.user img').src = `https://github.com/${entry.login}.png` 
         row.querySelector('.user a p').innerHTML = `${entry.name}<br/>
         <span>/${entry.login}</span>`
-        row.querySelector('.repos').textContent = entry.public_reps;
+        row.querySelector('.repos').textContent = entry.public_repos;
         row.querySelector('.followers').textContent = entry.followers;
 
         this.tbody.append(row);
@@ -148,6 +160,15 @@ export class FavoritesView extends Favorites {
     </td>`
 
     return tr;
+  }
+
+  addAUser() {
+    const addButton = this.root.querySelector('#fav-button');
+    
+    addButton.onclick = () => {
+      const { value } = this.root.querySelector("#search-user");
+      this.add(value);
+    }
   }
 
 }
