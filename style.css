@@ -22,9 +22,10 @@ body * {
 
 #app {
   font-family: 'Roboto', sans-serif;
-  max-width: 120rem;
+  max-width: 110rem;
+  min-width: 545px;
   margin: 0 auto;
-  padding: 5rem;
+  padding: 1.5rem;
 }
 
 .user img {
@@ -38,12 +39,13 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: .5rem;
   margin: 7.5rem auto 6rem;
   width: 100%;
 }
 
 header img {
-  width: 22rem;
+  width: 17rem;
   height: 5.4rem;
 }
 
@@ -57,7 +59,7 @@ header img {
 
 .input-wrapper input {
   font-size: 1.4rem;
-  min-width: 36rem;
+  width: clamp(19.5rem, 35vw, 36rem);
   font-weight: 400;
   border-radius: .5rem;
 
@@ -85,7 +87,7 @@ header img {
   align-items: center;
   gap: .8rem;
 
-  padding: 1.2rem 3.2rem;
+  padding: 1.2rem clamp(1rem, 2vw, 3.2rem);
   
   background: var(--btn-bg-color);
   color: var(--btn-f-color);
@@ -118,19 +120,22 @@ table {
 
 table * {
   text-align: left;
-  font-size: clamp(6rem, 10rem + 2 vw, 20rem);
+  font-size: clamp(1.4rem, 2vw  2rem);
   font-weight: 700;
 }
 
 thead *, td {
-  padding: 1.6rem 4rem;
+  padding-left:clamp(.5rem, .5rem + 2vw, 1.6rem);
+  padding-right:clamp(.5rem, .5rem + 2vw, 1.6rem);
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
 }
 
 .table-scroll {
   overflow-y: overlay;
   overflow-wrap: anywhere;
   max-height: 64.2rem;
-  border: 1px solid #065E7C;
+  border: 1px solid rgba(74, 128, 140, 0.76);
   border-radius: .8rem;
 }
 
@@ -156,9 +161,10 @@ tbody tr:nth-child(even) {
   background: #06181C;
 }
 
+
 td.user {
   /* width: clamp(10rem, 16rem + 3vw, 21.2rem); */
-  min-width: 15rem;
+  min-width: 10rem;
 } 
 
 td.user a {
@@ -173,6 +179,18 @@ td.user a {
 td.user span {
   font-weight: 400;
 } 
+
+td.repos {
+  min-width: 12.3rem;
+}
+
+td.followers {
+  min-width: 11.4rem;
+}
+
+td.action {
+  min-width: 9rem;
+}
 
 .action button {
   background: none;
@@ -197,7 +215,7 @@ tr:last-child td:last-child {
 
 tr td.empty-state {
   justify-content: center;
-  height: 64.2rem;
+  height: 56rem;
 }
 
 #empty-state {
