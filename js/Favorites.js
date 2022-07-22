@@ -9,18 +9,18 @@ export class Favorites {
   }
 
   load() {
-    this.entries = JSON.parse(localStorage.getItem('@github-favs:')) || []
+    this.entries = JSON.parse(localStorage.getItem('@github-favs:')) || [];
   }
 
   save() {
-    localStorage.setItem('@github-favs:', JSON.stringify(this.entries))
+    localStorage.setItem('@github-favs:', JSON.stringify(this.entries));
   }
 
   async add(user) {
     try {
       const userFaved = this.entries.find(entry => user.toUpperCase() === entry.login.toUpperCase());
       if (userFaved) {
-        throw new Error('Este usuário já está entre os favoritos!')
+        throw new Error('Este usuário já está entre os favoritos!');
       }
 
       const newUser = await GitHubUser.search(user);
@@ -31,36 +31,35 @@ export class Favorites {
     
       this.entries = [newUser, ...this.entries];
   
+      this.update();
+      this.save();
+
     } catch(error) {
       alert(error.message);
     }
 
-    this.update();
 
-    this.save();
   }
 
   delete(user) {
     let newEntries = [];
     this.entries.forEach(entry => {
       if (entry.login !== user) {
-        newEntries = [...newEntries, entry]
+        newEntries = [...newEntries, entry];
       }
     })
 
-    const isOk = confirm("Tem certeza de que quer desfavoritar esse usuário?")
-    if (isOk){
+    const isOk = confirm("Tem certeza de que quer desfavoritar esse usuário?");
+    if (isOk) {
       this.entries = newEntries;
+      this.update();
+      this.save();
     }
-
-    this.update();
-    this.save();
   }
 
 }
 
 //html
-
 export class FavoritesView extends Favorites {
   constructor(root) {
     super(root);
@@ -84,7 +83,6 @@ export class FavoritesView extends Favorites {
     .forEach(
       (row) => {
         row.remove();
-        // emptyState();
       }
     )
   }
@@ -95,11 +93,11 @@ export class FavoritesView extends Favorites {
       {
         const row = this.createARow();
 
-        row.querySelector('.user a').href = `https://github.com/${entry.login}`
-        row.querySelector('.user img').alt = `Imagem de ${entry.name}` 
-        row.querySelector('.user img').src = `https://github.com/${entry.login}.png` 
-        row.querySelector('.user a p').innerHTML = `${entry.name}<br/>
-        <span>/${entry.login}</span>`
+        row.querySelector('.user a').href = `https://github.com/${entry.login}`;
+        row.querySelector('.user img').alt = `Imagem de ${entry.name}` ;
+        row.querySelector('.user img').src = `https://github.com/${entry.login}.png`;
+        row.querySelector('.user a p').innerHTML = `<span>${entry.name}</span><br/>
+        /${entry.login}`;
         row.querySelector('.repos').textContent = entry.public_repos;
         row.querySelector('.followers').textContent = entry.followers;
 
@@ -124,8 +122,8 @@ export class FavoritesView extends Favorites {
             <td class="user">
               <a href="https://github.com/user" target="_blank">
                 <img alt="Imagem de name" src="https://github.com/stelardn.png">
-                <p>Name<br/>
-                  <span>/login</span>
+                <p><span>Name</span><br/>
+                  /login
                 </p>
               </a>
             </td>
@@ -160,6 +158,7 @@ export class FavoritesView extends Favorites {
     addButton.onclick = () => {
       const { value } = this.root.querySelector("#search-user");
       this.add(value);
+      this.root.querySelector("#search-user").value = "";
     }
   }
 

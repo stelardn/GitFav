@@ -22,7 +22,7 @@ body * {
 
 #app {
   font-family: 'Roboto', sans-serif;
-  max-width: 110rem;
+  max-width: 100rem;
   min-width: 545px;
   margin: 0 auto;
   padding: 1.5rem;
@@ -120,15 +120,12 @@ table {
 
 table * {
   text-align: left;
-  font-size: clamp(1.4rem, 2vw  2rem);
-  font-weight: 700;
+  font-size: clamp(1.3rem, 1vw, 2rem);
 }
 
 thead *, td {
-  padding-left:clamp(.5rem, .5rem + 2vw, 1.6rem);
-  padding-right:clamp(.5rem, .5rem + 2vw, 1.6rem);
-  padding-top: 1.6rem;
-  padding-bottom: 1.6rem;
+  font-weight: 700;
+  padding: 1.6rem clamp(.5rem, .5rem + 2vw, 1.6rem);
 }
 
 .table-scroll {
@@ -161,9 +158,11 @@ tbody tr:nth-child(even) {
   background: #06181C;
 }
 
+tbody tr {
+  animation: upDown 500ms;
+}
 
 td.user {
-  /* width: clamp(10rem, 16rem + 3vw, 21.2rem); */
   min-width: 10rem;
 } 
 
@@ -174,10 +173,11 @@ td.user a {
 
 td.user a {
   text-decoration: none;
+  font-weight: 400;
 }
 
-td.user span {
-  font-weight: 400;
+td.user a span {
+  font-weight: 700;
 } 
 
 td.repos {
@@ -242,6 +242,47 @@ tr td.empty-state {
 .table-scroll::-webkit-scrollbar{
   width: .6rem;
   background-color: transparent;
+}
+
+@media (max-width: 560px) {
+  #app {
+    min-width: 48rem;
+  }
+
+  header {
+    flex-direction: column;
+  }
+
+  td.user a {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+
+    min-width: 8rem;
+  }
+
+  td.user a p span {
+    display: none;
+  }
+
+  td.user a p {
+    justify-self: start;
+  }
+
+  
+}
+
+@keyframes upDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }
 
 
